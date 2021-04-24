@@ -8,18 +8,18 @@ import { BASE_URL } from './../../constants'
 function FAQ () {
 
     return (
-        <Box>
+        <Box >
             <Header background="light-4" pad="medium" height="xsmall">
             <Anchor
                 href={BASE_URL}
                 icon={<LinkPrevious color="brand" />}
             />
             </Header>
-            <Box>
+            <Box pad="large">
                 <Heading alignSelf="center" margin="xlarge" textAlign="center">FAQs</Heading>
                 <Box alignContent="center" alignSelf="center" align="center">
                     <Heading margin="none" level="4" textAlign="center">Why?</Heading>
-                    <Paragraph textAlign="center">BPHC has no one central self branded URL shortner unlike it's sister Goa campus.</Paragraph>
+                    <Paragraph textAlign="center">BPHC has no one central self branded URL shortner unlike its sister Goa campus.</Paragraph>
                 </Box>
                 <br />
                 <Box alignContent="center" alignSelf="center" align="center">
