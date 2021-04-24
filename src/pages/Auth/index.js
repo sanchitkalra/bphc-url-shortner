@@ -30,10 +30,8 @@ function Auth() {
 
     function submitForm(e) {
         if (verifyEmailValidity(email)) {
-            console.log("yes")
             setEmailError(true)
         } else {
-            console.log("neh")
             setEmailError(false)
         }
     }

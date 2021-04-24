@@ -54,7 +54,7 @@ function Landing () {
                 <Heading alignSelf="center" textAlign="center" level="3">this project is highly inspired by BPGC's URL shortening service, and frankly, I wasn't happy we didn't have one, xD</Heading>
                 <Anchor href={`${BASE_URL}/auth`} alignSelf="center" label="signin to create your own" />
                 <Box margin="xlarge">
-                    <Text textAlign="center" alignSelf="center">made with ❤️ by <Anchor href="https://twitter.com/sanchit_kalra1">@sanchit_kalra1</Anchor> and <Anchor href="https://v2.grommet.io/">Grommet Design</Anchor></Text>
+                    <Text textAlign="center" alignSelf="center">made with ❤️ by <Anchor href="https://twitter.com/sanchit_kalra1">@sanchit_kalra1</Anchor></Text>
                     <Text textAlign="center" alignSelf="center">disclaimer: this project is not officially associated with neither BITS Pilani, Hyderabad Campus nor any clubs, assocs, or departments</Text>
                 </Box>
             </Box>
