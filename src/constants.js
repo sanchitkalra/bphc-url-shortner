@@ -1,4 +1,4 @@
-const BASE_URL = "https://bphc-url-shortner.onrender.com"
+const BASE_URL = "https://bp-hc.xyz/"
 
 module.exports = {
     BASE_URL
