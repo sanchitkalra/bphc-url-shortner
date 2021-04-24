@@ -37,6 +37,11 @@ function FAQ () {
                     <Paragraph textAlign="center">Complaints can be sent to f20202298@hyderabad.bits-pilani.ac.in if you find any objectionable or unlawful content.</Paragraph>
                 </Box>
                 <br />
+                <Box alignContent="center" alignSelf="center" align="center">
+                    <Heading margin="none" level="4" textAlign="center">I have another question</Heading>
+                    <Paragraph textAlign="center">Please reach out at f20202298@hyderabad.bits-pilani.ac.in or you can DM on Twitter.</Paragraph>
+                </Box>
+                <br />
             </Box>
             <Footer alignContent="center" alignSelf="center" align="center">
                 <Text alignSelf="center" textAlign="center" margin="xlarge">made with ❤️ by <Anchor href="https://twitter.com/sanchit_kalra1">@sanchit_kalra1</Anchor></Text>
