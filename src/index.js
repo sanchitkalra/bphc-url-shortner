@@ -7,12 +7,19 @@ import reportWebVitals from './reportWebVitals';
 import { Grommet } from 'grommet';
 import { grommet } from 'grommet/themes';
 
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <Grommet theme={grommet} full>
+//       <App />
+//     </Grommet>
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );
+
 ReactDOM.render(
-  <React.StrictMode>
-    <Grommet theme={grommet} full>
-      <App />
-    </Grommet>
-  </React.StrictMode>,
+  <Grommet theme={grommet} full>
+    <App />
+  </Grommet>,
   document.getElementById('root')
 );
 

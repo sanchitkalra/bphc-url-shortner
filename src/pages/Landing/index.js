@@ -4,6 +4,7 @@ import { Header, Anchor, Box, ResponsiveContext, Menu, Heading, Text } from 'gro
 import { Menu as MenuIcon } from 'grommet-icons';
 
 import { BASE_URL } from './../../constants'
+import { Link } from 'react-router-dom';
 
 function Landing () {
 
@@ -25,25 +26,29 @@ function Landing () {
                                 items={[
                                 {
                                     label: <Box pad="small">FAQ</Box>,
-                                    href: `${BASE_URL}/faq`,
+                                    as: Link,
+                                    to: '/faq'
                                 },
                                 {
                                     label: <Box pad="small">Login</Box>,
-                                    href: `${BASE_URL}/auth`,
+                                    as: Link,
+                                    to: '/auth'
                                 },
                                 ]}
                             />
                             </Box>
                         ) : (
                             <Box justify="end" direction="row" gap="medium">
-                            <Anchor
-                                href={`${BASE_URL}/faq`}
-                                label="FAQ"
-                            />
-                            <Anchor
-                                href={`${BASE_URL}/auth`}
-                                label="Login"
-                            />
+                            <Link to='/faq'>
+                                <Anchor
+                                    label="FAQ"
+                                />
+                            </Link>
+                            <Link to='/auth'>
+                                <Anchor
+                                    label="Login"
+                                />
+                            </Link>
                             </Box>
                         )
                     }
@@ -52,7 +57,11 @@ function Landing () {
             <Box>
                 <Heading alignSelf="center" margin="xlarge" textAlign="center">a free URL shortening service for students of BPHC</Heading>
                 <Heading alignSelf="center" textAlign="center" level="3">this project is highly inspired by BPGC's URL shortening service, and frankly, I wasn't happy we didn't have one, xD</Heading>
-                <Anchor href={`${BASE_URL}/auth`} alignSelf="center" label="signin to create your own" />
+                <Box align="center" alignSelf="center" alignContent="center">
+                    <Link to='/auth'>
+                        <Anchor alignSelf="center" label="signin to create your own" />
+                    </Link>
+                </Box>
                 <Box margin="xlarge">
                     <Text textAlign="center" alignSelf="center">made with ❤️ by <Anchor href="https://twitter.com/sanchit_kalra1">@sanchit_kalra1</Anchor></Text>
                     <Text textAlign="center" alignSelf="center">disclaimer: this project is not officially associated with either BITS Pilani, Hyderabad Campus or any clubs, associations, or departments</Text>

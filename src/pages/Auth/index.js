@@ -14,6 +14,7 @@ import {
 import { LinkPrevious } from 'grommet-icons';
 
 import { BASE_URL } from '../../constants'
+import firebaseRef from '../../firebaseRef'
 
 function verifyEmailValidity(email) {
     var reg = /^[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(hyderabad.bits-pilani)\.ac.in$/
@@ -26,57 +27,127 @@ function verifyEmailValidity(email) {
 function Auth() {
 
     const [email, setEmail] = React.useState("")
-    const [emailError, setEmailError] = React.useState(true)
+    const [password, setPassword] = React.useState("")
+    const [emailError, setEmailError] = React.useState("")
+    const [passwordError, setPasswordError] = React.useState("")
 
-    function submitForm(e) {
-        if (verifyEmailValidity(email)) {
-            setEmailError(true)
+    // the following states correspond to the disabled prop, hence false by default
+    const [authButtonStates, setAuthButtonStates] = React.useState(false)
+
+    function submitLogin(e) {
+        if (email) {
+            if (verifyEmailValidity(email)) {
+                setAuthButtonStates(true)
+                setEmailError("")
+                firebaseRef.auth().signInWithEmailAndPassword(email, password).catch((error) => {
+                    switch (error.code) {
+                        case "auth/invalid-email":
+                        case "auth/user-disabled":
+                        case "auth/user-not-found":
+                            setEmailError("no account exists for that email, signup instead")
+                            setAuthButtonStates(false)
+                            break
+                        case "auth/invalid-password":
+                            setPasswordError(error.message)
+                            setAuthButtonStates(false)
+                            break
+                        default:
+                            setPasswordError('incorrect password')
+                            setAuthButtonStates(false)
+                    }
+                }).then((user) => {
+                    console.log(user)
+                })
+            } else {
+                setEmailError("only BITS Hyderabad email addresses")
+            }
         } else {
-            setEmailError(false)
+            setEmailError("")
         }
     }
 
-    return(
-        <Box>
-            <Header pad="medium" height="xsmall">
-            <Anchor
-                href={BASE_URL}
-                icon={<LinkPrevious color="brand" />}
-            />
-            </Header>
-            <Box fill align="center" justify="center">
-                <Box width="medium">
-                    <Form>
-                        <FormField label="Email" name="email" required>
-                            <MaskedInput
-                                value={email}
-                                onChange={e => {
-                                    setEmail(e.target.value)
-                                }}
-                                name="email"
-                                type="email"
-                            />
-                        </FormField>
-                        <FormField label="Password" name="password">
-                            <TextInput name="password" type="password"/>
-                        </FormField>
-                        <Box direction="row" justify="between" margin={{ top: 'medium' }}>
-                            <Button onClick={submitForm} type="submit" label="Login" primary />
-                            <Button type="reset" label="Create Account" />
-                        </Box>
-                        <Box direction="row" justify="between" margin={{ top: 'medium' }}>
-                            <Button type="reset" size="small" label="Reset Password" />
-                        </Box>
-                        <Box direction="row" justify="between" margin={{ top: 'medium' }}>
-                            {
-                                emailError ? <Text></Text> : <Text>only BITS Hyderabad email addresses</Text>
-                            }
-                        </Box>
-                    </Form>
+    function submitCreateAccount(e) {
+        if (email) {
+            if (verifyEmailValidity(email)) {
+                setAuthButtonStates(true)
+                setEmailError("")
+                firebaseRef.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
+                    switch (error.code) {
+                        case "auth/invalid-email":
+                        case "auth/user-disabled":
+                        case "auth/user-not-found":
+                            setEmailError(error.message)
+                            setAuthButtonStates(false)
+                            break
+                        case "auth/invalid-password":
+                            setPasswordError(error.message)
+                            setAuthButtonStates(false)
+                            break
+                        default:
+                            setPasswordError('an unexpected error occurred')
+                            setAuthButtonStates(false)
+                    }
+                }).then((user) => {
+                    console.log(user)
+                })
+            } else {
+                setEmailError("only BITS Hyderabad email addresses")
+            }
+        } else {
+            setEmailError("")
+        }
+    }
+
+        return(
+            <Box>
+                <Header pad="medium" height="xsmall">
+                <Anchor
+                    href={BASE_URL}
+                    icon={<LinkPrevious color="brand" />}
+                />
+                </Header>
+                <Box fill align="center" justify="center">
+                    <Box width="medium">
+                        <Form>
+                            <FormField label="Email" name="email" required>
+                                <MaskedInput
+                                    value={email}
+                                    onChange={e => {
+                                        setEmail(e.target.value)
+                                    }}
+                                    name="email"
+                                    type="email"
+                                />
+                            </FormField>
+                            <Box direction="row" justify="between" margin={{ top: 'medium' }}>
+                                <Text>{emailError}</Text>
+                            </Box>
+                            <FormField label="Password" name="password" required>
+                                <TextInput 
+                                    name="password" 
+                                    type="password"
+                                    value={password}
+                                    onChange={e => {
+                                        setPassword(e.target.value)
+                                    }}
+                                />
+                            </FormField>
+                            <Box direction="row" justify="between" margin={{ top: 'medium' }}>
+                                <Text alignSelf="center">{passwordError}</Text>
+                            </Box>
+                            <Box direction="row" justify="between" margin={{ top: 'medium' }}>
+                                <Button disabled={authButtonStates} onClick={submitLogin} type="submit" label="Login" primary />
+                                <Button disabled={authButtonStates} onClick={submitCreateAccount} type="reset" label="Create Account" />
+                            </Box>
+                            <Box direction="row" justify="between" margin={{ top: 'medium' }}>
+                                <Button disabled={authButtonStates} type="reset" size="small" label="Reset Password" />
+                            </Box>
+                        </Form>
+                    </Box>
                 </Box>
             </Box>
-        </Box>
-    )
+        )
+
 }
 
 export default Auth
