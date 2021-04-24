@@ -55,7 +55,7 @@ function Landing () {
                 <Anchor href={`${BASE_URL}/auth`} alignSelf="center" label="signin to create your own" />
                 <Box margin="xlarge">
                     <Text textAlign="center" alignSelf="center">made with ❤️ by <Anchor href="https://twitter.com/sanchit_kalra1">@sanchit_kalra1</Anchor></Text>
-                    <Text textAlign="center" alignSelf="center">disclaimer: this project is not officially associated with neither BITS Pilani, Hyderabad Campus nor any clubs, assocs, or departments</Text>
+                    <Text textAlign="center" alignSelf="center">disclaimer: this project is not officially associated with either BITS Pilani, Hyderabad Campus or any clubs, associations, or departments</Text>
                 </Box>
             </Box>
         </Box>
