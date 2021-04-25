@@ -12,8 +12,8 @@ import {
   } from 'grommet';
 
 import { LinkPrevious } from 'grommet-icons';
+import {Link} from 'react-router-dom'
 
-import { BASE_URL } from '../../constants'
 import firebaseRef from '../../firebaseRef'
 
 function verifyEmailValidity(email) {
@@ -101,10 +101,13 @@ function Auth() {
         return(
             <Box>
                 <Header pad="medium" height="xsmall">
-                <Anchor
-                    href={BASE_URL}
-                    icon={<LinkPrevious color="brand" />}
-                />
+                <Box>
+                    <Link to="/">
+                        <Anchor
+                            icon={<LinkPrevious color="brand" />}
+                        />
+                    </Link>
+                </Box>
                 </Header>
                 <Box fill align="center" justify="center">
                     <Box width="medium">
