@@ -2,8 +2,6 @@ import React from 'react'
 
 import { Header, Anchor, Box, ResponsiveContext, Menu, Heading, Text } from 'grommet';
 import { Menu as MenuIcon } from 'grommet-icons';
-
-import { BASE_URL } from './../../constants'
 import { Link } from 'react-router-dom';
 
 function Landing () {
@@ -11,10 +9,13 @@ function Landing () {
     return (
         <Box>
             <Header background="light-4" pad="medium" height="xsmall">
-                <Anchor
-                    href={BASE_URL}
-                    label="BPHC URL Shortening Service"
-                />
+                <Box>
+                    <Link to='/'>
+                        <Anchor
+                            label="BPHC URL Shortening Service"
+                        />
+                    </Link>
+                </Box>
                 <ResponsiveContext.Consumer>
                     {size =>
                         size === 'small' ? (
