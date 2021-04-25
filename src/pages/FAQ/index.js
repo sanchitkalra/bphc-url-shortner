@@ -2,18 +2,20 @@ import React from 'react'
 
 import { Header, Anchor, Box, Heading, Text, Footer, Paragraph } from 'grommet';
 import { LinkPrevious } from 'grommet-icons';
-
-import { BASE_URL } from './../../constants'
+import { Link } from 'react-router-dom';
 
 function FAQ () {
 
     return (
         <Box >
             <Header background="light-4" pad="medium" height="xsmall">
-            <Anchor
-                href={BASE_URL}
-                icon={<LinkPrevious color="brand" />}
-            />
+            <Box>
+                <Link to="/">
+                    <Anchor
+                        icon={<LinkPrevious color="brand" />}
+                    />
+                </Link>
+            </Box>
             </Header>
             <Box pad="large">
                 <Heading alignSelf="center" margin="xlarge" textAlign="center">FAQs</Heading>
