@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Header, Anchor, Box, ResponsiveContext, Menu, Heading, Text } from 'grommet';
+import { Header, Anchor, Box, ResponsiveContext, Menu, Heading, Text, Button } from 'grommet';
 import { Menu as MenuIcon } from 'grommet-icons';
 import { Link } from 'react-router-dom';
 
@@ -60,8 +60,14 @@ function Landing () {
                 <Heading alignSelf="center" textAlign="center" level="3">this project is highly inspired by BPGC's URL shortening service, and frankly, I wasn't happy we didn't have one, xD</Heading>
                 <Box align="center" alignSelf="center" alignContent="center">
                     <Link to='/auth'>
-                        <Anchor alignSelf="center" label="signin to create your own" />
+                        <Button
+                            label="signin to create your own"
+                        >
+                        </Button>
                     </Link>
+                    {/* <Link to='/auth'>
+                        <Anchor alignSelf="center" label="signin to create your own" />
+                    </Link> */}
                 </Box>
                 <Box margin="xlarge">
                     <Text textAlign="center" alignSelf="center">made with ❤️ by <Anchor href="https://twitter.com/sanchit_kalra1">@sanchit_kalra1</Anchor></Text>
