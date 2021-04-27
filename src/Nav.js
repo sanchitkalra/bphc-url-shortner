@@ -39,4 +39,4 @@ function AppNav() {
     )
 }
 
-export default React.memo(AppNav)
+export default AppNav
