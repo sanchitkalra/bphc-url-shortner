@@ -41,8 +41,12 @@ function Auth() {
                 setEmailError("")
                 firebaseRef.auth().sendPasswordResetEmail(email).then(function() {
                     // Email sent.
+                    setAuthButtonStates(true)
+                    setEmailError("")
                   }).catch(function(error) {
                     // An error happened.
+                    setAuthButtonStates(false)
+                    setEmailError("")
                   });
             }
         }
