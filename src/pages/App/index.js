@@ -14,6 +14,7 @@ function Dashboard (props) {
         firebaseRef.auth().signOut().then(() => {
             // Sign-out successful.
             history.push('/')
+            window.location.reload(true); // forces a window reload, fixes the issue at https://github.com/sanchitkalra/bphc-url-shortner/issues/1
           }).catch((error) => {
             // An error happened.
           });
