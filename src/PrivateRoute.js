@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 function PrivateRoute({ children, auth, ...rest }) {
 
     // const user = React.useContext(AuthStateContext);
-    console.log('pvt route: ', auth.user)
+    // console.log('pvt route: ', auth.user)
 
     return (
       <Route

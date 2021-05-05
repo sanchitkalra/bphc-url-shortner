@@ -1,12 +1,43 @@
 import React from 'react'
 
-import { Header, Anchor, Box, Button, Heading, Form, FormField, MaskedInput } from 'grommet';
+import { Header, Anchor, Box, Button, Heading, Form, FormField, MaskedInput, Paragraph, List } from 'grommet';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router'
+import 'firebase/firestore'
+import 'firebase/auth'
+import { v4 as uuidv4 } from 'uuid';
 
 import firebaseRef from '../../firebaseRef'
+import {FIREBASE_SHORTCODES_COLLECTION} from '../../constants'
 
 function Dashboard (props) {
+
+    const [fullURL, setFullURL] = React.useState("")
+    const [short, setShort] = React.useState("")
+    const [errorText, setErrorText] = React.useState("")
+
+    const [userURLExists, setUserURLExists] = React.useState(false)
+    const [userURls, setUserURls] = React.useState(null)
+
+    React.useEffect(() => {
+        firebaseRef.firestore().collection(FIREBASE_SHORTCODES_COLLECTION).where("owner", "==", firebaseRef.auth().currentUser.uid).get()
+            .then((querySnapshot) => {
+                const data = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                  }));
+                  // console.log("All data in 'shorts' collection", data); 
+                  setUserURls(data)
+                  setUserURLExists(true)
+                  console.log(userURls)
+            })
+            .catch((error) => {
+                // console.log("Error getting documents: ", error);
+                setUserURls(null)
+                setUserURLExists(false)
+            });
+            // eslint-disable-next-line
+    }, [])
 
     let history = useHistory()
 
@@ -14,10 +45,93 @@ function Dashboard (props) {
         firebaseRef.auth().signOut().then(() => {
             // Sign-out successful.
             history.push('/')
-            window.location.reload(true); // forces a window reload, fixes the issue at https://github.com/sanchitkalra/bphc-url-shortner/issues/1
+            window.location.reload(); // forces a window reload, fixes the issue at https://github.com/sanchitkalra/bphc-url-shortner/issues/1
           }).catch((error) => {
             // An error happened.
           });
+    }
+
+    function validURL(str) {
+        var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+          '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+          '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+          '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+          '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+          '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+    
+        return !!pattern.test(str);
+    }
+
+    function onShortPress (e) {
+            if (validURL(fullURL)) {
+                setErrorText("")
+
+                if (short) {
+                    setErrorText("")
+                    if (short !== "app" && short !== "auth" && short !== "faq") {
+                        
+                        firebaseRef.firestore().collection(FIREBASE_SHORTCODES_COLLECTION).doc(short).get().then((doc) => {
+                            if (!doc.exists) {
+                                console.log("Shortcode available")
+                                firebaseRef.firestore().collection(FIREBASE_SHORTCODES_COLLECTION).doc(short).set({
+                                    id: uuidv4(),
+                                    fullURL: fullURL,
+                                    owner: firebaseRef.auth().currentUser.uid,
+                                    short: short
+                                }).then(() => {
+                                    console.log("Document successfully written!");
+                                    setErrorText("Shortcode created 🎉")
+                                    console.log(fullURL)
+                                })
+                                .catch((error) => {
+                                    console.error("Error writing document: ", error);
+                                });
+                            } else {
+                                console.log("Shortcode unavailable")
+                                setErrorText("This shortcode has already been claimed")
+                            }
+                        })
+
+                    } else {
+                        setErrorText(`Can't use reserved Shortcode '${short}'`)
+                    }
+                }
+
+            } else {
+                setErrorText("Enter a valid URL")
+            }
+        }
+
+    function NoURLs() {
+        return (
+            <Box>
+                <Heading level="3">
+                    Your URLs
+                </Heading>
+                <Paragraph>There are no URLs associated with your account, go ahead and create one!</Paragraph>
+            </Box>
+        )
+    }
+
+    function URLList() {
+        return (
+            <Box pad={{ "bottom": "xlarge"}}>
+                <Heading level="3">
+                    Your URLs
+                </Heading>
+                <Paragraph fill="true">
+                    All your shorten URLs are available at https://bp-hc.xyz/your-shortcode
+                </Paragraph>
+                {
+                    userURls.length ?
+                        <List
+                            primaryKey="fullURL"
+                            secondaryKey="short"
+                            data={userURls}
+                        /> : <></>
+                }
+            </Box>
+        )
     }
 
     return (
@@ -38,22 +152,41 @@ function Dashboard (props) {
                 </Box>
             </Header>
             <Box pad="xlarge">
-                <Heading level="3" alignSelf="center">
+                <Heading level="3">
                     Enter a URL to shorten
                 </Heading>
                 <Form>
                     <FormField label="URL" name="url" required>
                         <MaskedInput
                             name="url"
+                            value={fullURL}
+                            onChange={e => {
+                                setFullURL(e.target.value)
+                            }}
                         />
                     </FormField> 
                     <br />
                     <FormField label="Shortcode" name="shortcode" required>
                         <MaskedInput
                             name="shortcode"
+                            value={short}
+                            onChange={e => {
+                                setShort(e.target.value)
+                            }}
                         />
-                    </FormField>             
+                    </FormField>  
+                    <br />   
+                    {
+                        errorText ? <Paragraph>{errorText}</Paragraph> : <Paragraph></Paragraph>
+                    }
+                    <Button onClick={e => {
+
+                        onShortPress()
+                    }} alignSelf="center" primary label="Shorten" />        
                 </Form>
+            </Box>
+            <Box pad={{ "left": "xlarge", "right": "xlarge" }}>
+                {userURLExists ? <URLList /> : <NoURLs />}
             </Box>
         </Box>
     )

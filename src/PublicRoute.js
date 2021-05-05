@@ -9,7 +9,7 @@ function PublicRoute({ children, auth, ...rest }) {
 
     //const user = React.useContext(AuthStateContext);
 
-    console.log('public route: ', auth.user)
+    // console.log('public route: ', auth.user)
     
     return (
       <Route

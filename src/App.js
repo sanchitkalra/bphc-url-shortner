@@ -12,7 +12,7 @@ function App() {
     console.log('app render')
     function authListener() {
         firebaseRef.auth().onAuthStateChanged((user) => {
-          console.log(user)
+          // console.log(user)
             if (user) {
               store.dispatch({
                 type: "SET_USER",
