@@ -34,6 +34,20 @@ function Auth() {
     // the following states correspond to the disabled prop, hence false by default
     const [authButtonStates, setAuthButtonStates] = React.useState(false)
 
+    function submitReset(e) {
+        if (email) {
+            if (verifyEmailValidity(email)) {
+                setAuthButtonStates(true)
+                setEmailError("")
+                firebaseRef.auth().sendPasswordResetEmail(email).then(function() {
+                    // Email sent.
+                  }).catch(function(error) {
+                    // An error happened.
+                  });
+            }
+        }
+    }
+
     function submitLogin(e) {
         if (email) {
             if (verifyEmailValidity(email)) {
@@ -143,7 +157,7 @@ function Auth() {
                                 <Button disabled={authButtonStates} onClick={submitCreateAccount} type="reset" label="Create Account" />
                             </Box>
                             <Box direction="row" justify="between" margin={{ top: 'medium' }}>
-                                <Button disabled={authButtonStates} type="reset" size="small" label="Reset Password" />
+                                <Button disabled={authButtonStates} onClick={submitReset} type="reset" size="small" label="Reset Password" />
                             </Box>
                         </Form>
                     </Box>
