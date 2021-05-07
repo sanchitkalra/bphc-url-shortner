@@ -3,6 +3,7 @@ import React from 'react'
 import { Header, Anchor, Box, ResponsiveContext, Menu, Heading, Text, Button } from 'grommet';
 import { Menu as MenuIcon } from 'grommet-icons';
 import { Link } from 'react-router-dom';
+import FooterSimple from '../../components/footer_simple';
 
 function Landing () {
 
@@ -69,10 +70,7 @@ function Landing () {
                         <Anchor alignSelf="center" label="signin to create your own" />
                     </Link> */}
                 </Box>
-                <Box margin="xlarge">
-                    <Text textAlign="center" alignSelf="center">made with ❤️ by <Anchor href="https://twitter.com/sanchit_kalra1">@sanchit_kalra1</Anchor></Text>
-                    <Text textAlign="center" alignSelf="center">disclaimer: this project is not officially associated with either BITS Pilani, Hyderabad Campus or any clubs, associations, or departments</Text>
-                </Box>
+                <FooterSimple />
             </Box>
         </Box>
     )
