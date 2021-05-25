@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Header, Anchor, Box, ResponsiveContext, Menu, Heading, Text, Button } from 'grommet';
+import { Header, Anchor, Box, ResponsiveContext, Menu, Heading, Button } from 'grommet';
 import { Menu as MenuIcon } from 'grommet-icons';
 import { Link } from 'react-router-dom';
 import FooterSimple from '../../components/footer_simple';

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Header, Anchor, Box, Button, Heading, Form, FormField, MaskedInput, Paragraph, List } from 'grommet';
+import { Header, Anchor, Box, Button, Heading, Form, FormField, MaskedInput, Paragraph} from 'grommet';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router'
 import 'firebase/firestore'
@@ -9,6 +9,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import firebaseRef from '../../firebaseRef'
 import {FIREBASE_SHORTCODES_COLLECTION} from '../../constants'
+
+import URLList from '../../components/url-list'
+import NoURLs from '../../components/no-urls'
 
 function Dashboard (props) {
 
@@ -82,6 +85,7 @@ function Dashboard (props) {
                                     console.log("Document successfully written!");
                                     setErrorText("Shortcode created 🎉")
                                     console.log(fullURL)
+                                    window.location.reload();
                                 })
                                 .catch((error) => {
                                     console.error("Error writing document: ", error);
@@ -101,38 +105,6 @@ function Dashboard (props) {
                 setErrorText("Enter a valid URL")
             }
         }
-
-    function NoURLs() {
-        return (
-            <Box>
-                <Heading level="3">
-                    Your URLs
-                </Heading>
-                <Paragraph>There are no URLs associated with your account, go ahead and create one!</Paragraph>
-            </Box>
-        )
-    }
-
-    function URLList() {
-        return (
-            <Box pad={{ "bottom": "xlarge"}}>
-                <Heading level="3">
-                    Your URLs
-                </Heading>
-                <Paragraph fill="true">
-                    All your shorten URLs are available at https://bp-hc.xyz/your-shortcode
-                </Paragraph>
-                {
-                    userURls.length ?
-                        <List
-                            primaryKey="fullURL"
-                            secondaryKey="short"
-                            data={userURls}
-                        /> : <></>
-                }
-            </Box>
-        )
-    }
 
     return (
         <Box>
@@ -180,13 +152,12 @@ function Dashboard (props) {
                         errorText ? <Paragraph>{errorText}</Paragraph> : <Paragraph></Paragraph>
                     }
                     <Button onClick={e => {
-
                         onShortPress()
                     }} alignSelf="center" primary label="Shorten" />        
                 </Form>
             </Box>
             <Box pad={{ "left": "xlarge", "right": "xlarge" }}>
-                {userURLExists ? <URLList /> : <NoURLs />}
+                {userURLExists ? <URLList userURls={userURls} /> : <NoURLs />}
             </Box>
         </Box>
     )

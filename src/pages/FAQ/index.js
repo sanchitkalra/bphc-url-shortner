@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Header, Anchor, Box, Heading, Text, Footer} from 'grommet';
+import { Header, Anchor, Box, Heading} from 'grommet';
 import { LinkPrevious } from 'grommet-icons';
 import { Link } from 'react-router-dom';
 
