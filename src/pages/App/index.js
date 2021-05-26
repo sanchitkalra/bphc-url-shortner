@@ -1,4 +1,5 @@
 import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Header, Anchor, Box, Button, Heading, Form, FormField, MaskedInput, Paragraph} from 'grommet';
 import { Link } from 'react-router-dom';
