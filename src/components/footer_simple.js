@@ -5,7 +5,7 @@ import {Footer, Text, Anchor} from 'grommet'
 function FooterSimple() {
     return (
         <Footer alignContent="center" alignSelf="center" align="center">
-            <Text alignSelf="center" textAlign="center" margin="xlarge">made with ❤️ by <Anchor href="https://twitter.com/sanchit_kalra1">@sanchit_kalra1</Anchor></Text>
+            <Text alignSelf="center" textAlign="center" margin="xlarge">made with ❤️ by <Anchor href="https://github.com/sanchitkalra">@sanchitkalra</Anchor></Text>
         </Footer>
     )
 }
